@@ -1,0 +1,200 @@
+/* ============================================================
+   KOSTKY DO HROBA – design plán
+   Subject: hospodářský skórovací stůl – náplnice, cihla, mosazé pásky.
+   Color: ink/linen světlý, čehý a medový tmavý, mosazný akcent,
+          zelená/červená semantická (zvýšení / snížení).
+   Type:  Zilla Slab = nadpisy a skóre (bublina, kostka dřeva),
+          Inter = UI a text, body 400/500/600.
+   Layout: jednoduchá tabulka + formulář pro zápis kol.
+   ============================================================ */
+:root {
+  --bg: #f3efe6;
+  --surface: #fbf9f4;
+  --surface2: #ede8dc;
+  --line: #dcd3bf;
+  --ink: #2b241a;
+  --muted: #857a66;
+  --accent: #a2611c;
+  --accent-ink: #fff;
+  --accent-soft: #f0e0c8;
+  --good: #3e6b3f;
+  --good-soft: #e2ecdc;
+  --bad: #a03b2e;
+  --bad-soft: #f4ded9;
+  --gold: #c89a3c;
+  --shadow: 0 1px 2px rgba(70,55,30,.08), 0 6px 18px -8px rgba(70,55,30,.25);
+  color-scheme: light;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg: #171310;
+    --surface: #201b16;
+    --surface2: #2a231c;
+    --line: #3a322a;
+    --ink: #ece4d6;
+    --muted: #9a8f7d;
+    --accent: #e0a94f;
+    --accent-ink: #201608;
+    --accent-soft: #3a2d18;
+    --good: #8fbf72;
+    --good-soft: #26301f;
+    --bad: #e07a63;
+    --bad-soft: #3a221c;
+    --gold: #d9ab55;
+    --shadow: 0 1px 2px rgba(0,0,0,.4), 0 10px 24px -10px rgba(0,0,0,.7);
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg: #171310;
+  --surface: #201b16;
+  --surface2: #2a231c;
+  --line: #3a322a;
+  --ink: #ece4d6;
+  --muted: #9a8f7d;
+  --accent: #e0a94f;
+  --accent-ink: #201608;
+  --accent-soft: #3a2d18;
+  --good: #8fbf72;
+  --good-soft: #26301f;
+  --bad: #e07a63;
+  --bad-soft: #3a221c;
+  --gold: #d9ab55;
+  --shadow: 0 1px 2px rgba(0,0,0,.4), 0 10px 24px -10px rgba(0,0,0,.7);
+  color-scheme: dark;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", sans-serif;
+  font-size: 15px;
+  line-height: 1.5;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: max(20px, env(safe-area-inset-top, 0px)) max(28px, env(safe-area-inset-bottom, 0px));
+}
+h1, h2, h3, .slab { font-family: "Zilla Slab", "Iowan Old Style", Georgia, serif; text-wrap: balance; }
+.num { font-variant-numeric: tabular-nums; }
+button {
+  font-family: inherit;
+  font-size: 14px;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  padding: 8px 14px;
+  cursor: pointer;
+  transition: background .15s, border-color .15s, transform .06s;
+}
+button:hover { background: var(--surface2); border-color: var(--muted); }
+button:active { transform: scale(.97); }
+button:focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
+button.primary {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: var(--accent-ink);
+  font-weight: 600;
+}
+button.primary:hover { filter: brightness(1.06); }
+button.ghost { background: transparent; border-color: transparent; color: var(--muted); }
+button.ghost:hover { color: var(--ink); background: var(--surface2); }
+button.danger { color: var(--bad); }
+button.danger:hover { background: var(--bad-soft); border-color: var(--bad); }
+button:disabled { opacity: .45; cursor: not-allowed; transform: none; }
+input {
+  font-family: inherit;
+  font-size: 14px;
+  color: var(--ink);
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 9px;
+  padding: 8px 10px;
+  width: 100%;
+}
+input:focus-visible { outline: 2px solid var(--accent); outline-offset: 1px; border-color: transparent; }
+label { font-size: 13px; font-weight: 500; color: var(--muted); display: block; margin-bottom: 4px; }
+.wrap { max-width: 1080px; margin: 0 auto; display: flex; flex-direction: column; gap: 22px; }
+
+/* ---------- hlavička ---------- */
+.top { display: flex; align-items: flex-end; justify-content: space-between; gap: 16px; flex-wrap: wrap; }
+.brand h1 { font-size: clamp(26px, 4.5vw, 34px); margin: 0; line-height: 1.05; letter-spacing: .2px; }
+.brand .sub { color: var(--muted); font-size: 13.5px; margin-top: 5px; max-width: 52ch; }
+.top-actions { display: flex; gap: 8px; align-items: center; }
+.chip {
+  display: inline-flex; align-items: center; gap: 6px;
+  background: var(--surface); border: 1px solid var(--line);
+  border-radius: 999px; padding: 6px 12px; font-size: 12.5px; font-weight: 500; color: var(--muted);
+}
+.chip b { color: var(--ink); }
+
+/* ---------- karty / sekce ---------- */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  box-shadow: var(--shadow);
+}
+.card > .card-head {
+  display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap;
+  padding: 13px 18px;
+  border-bottom: 1px solid var(--line);
+}
+.card-head h2 { margin: 0; font-size: 17px; letter-spacing: .2px; }
+.card-pad { padding: 18px; }
+
+/* ---------- scoreboard tabulka ---------- */
+.tboard { width: 100%; border-collapse: collapse; font-size: 14px; }
+.tboard th, .tboard td { padding: 9px 14px; border-bottom: 1px solid var(--line); text-align: right; }
+.tboard th:first-child, .tboard td:first-child { text-align: left; }
+.tboard thead th { font-size: 11.5px; text-transform: uppercase; letter-spacing: .08em; color: var(--muted); font-weight: 600; background: var(--surface2); }
+.tboard td.rank { color: var(--muted); font-size: 12.5px; }
+.tboard td .pname { font-weight: 600; }
+.tboard td .total { font-family: "Zilla Slab", serif; font-weight: 700; font-size: 16px; }
+.tboard tr.tot-row th { display: none; }
+.tboard tr.tot-row td { padding: 6px 14px; border-bottom: none; border-top: 2px solid var(--line); }
+.tboard tr.tot-row td .total { color: var(--accent); }
+
+.winner-banner {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 16px;
+  background: var(--good-soft);
+  border-radius: 0 0 14px 14px;
+  border-top: none;
+}
+.winner-banner .txt { font-size: 14.5px; }
+.winner-banner .txt b { font-family: "Zilla Slab", serif; font-size: 17px; }
+.winner-banner .spacer { flex: 1; }
+
+/* ---------- modal ---------- */
+.modal-veil {
+  position: fixed; inset: 0; z-index: 50;
+  background: rgba(20, 14, 8, .55);
+  display: flex; align-items: center; justify-content: center;
+  padding: 20px;
+}
+.modal-veil[hidden] { display: none; }
+.modal {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  box-shadow: 0 24px 60px -18px rgba(0,0,0,.5);
+  width: 100%; max-width: 420px;
+  padding: 20px;
+  max-height: min(80vh, 640px); overflow-y: auto;
+}
+.modal h3 { margin: 0 0 4px; font-size: 18px; }
+.modal .desc { color: var(--muted); font-size: 13.5px; margin: 0 0 16px; }
+.modal .field { margin-bottom: 14px; }
+.modal .row { display: flex; gap: 10px; margin-bottom: 14px; }
+.modal .row .field { flex: 1; }
+.modal .actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 6px; }
+.modal .confirm-note { font-size: 12.5px; color: var(--bad); margin-top: 12px; }
+
+.foot { text-align: center; color: var(--muted); font-size: 12px; padding: 4px 0 10px; line-height: 1.8; }
+.foot kbd { font-size: 11px; background: var(--surface2); border: 1px solid var(--line); border-bottom-width: 2px; border-radius: 4px; padding: 0 5px; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}
